@@ -7,6 +7,4 @@ const pool = mysql.createPool({
     database: 'storedb',
   }).promise()
 
-  //const result = await pool.query("select * from discounts")
-//console.log(result)
 export default pool;
