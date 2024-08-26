@@ -1,0 +1,122 @@
+  /* General Styles */
+.home-container {
+    position: relative;
+    height: 100vh;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .topnav {
+    position: fixed; /* Fix the nav bar to the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 20px; /* Adjust padding as needed */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(215, 206, 206, 0.8);
+    z-index: 1000; /* Ensure it's on top of other elements */
+  }
+  
+  .menu-toggle {
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: #fff;
+    cursor: pointer;
+    display: block; /* Show menu toggle by default */
+  }
+  
+  .menu {
+    display:block; /* Hide menu by default */
+    position: absolute;
+    top: 60px; /* Position below the header */
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    text-align: center;
+  }
+  
+  .menu.show {
+    display: block; /* Show menu when open */
+  }
+  
+  .menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu li {
+    margin: 10px 0;
+  }
+  
+  .menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  .menu a:hover {
+    text-decoration: underline;
+  }
+  
+  .heading {
+    color: #fff;
+    font-size: 24px;
+    flex-grow: 1; /* Take up remaining space */
+    margin-left: 540px; /* Distance from the hamburger icon */
+  }
+  
+  .icons {
+    display: flex;
+    gap: 15px; /* Space between icons */
+  }
+  
+  .icon {
+    color: #fff;
+    font-size: 24px;
+    text-decoration: none;
+  }
+  
+  .icon:hover {
+    color: #ddd;
+  }
+  
+  .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1600px;
+    height: 730px;
+    background-image: url('https://www.kosmeticaworld.com/files/2018/11/Fotolia_226436643_L.jpg'); /* Replace with your image URL */
+    background-size: cover;
+    background-position: center;
+    z-index: 0; /* Ensure background is behind the nav */
+  }
+  
+  /* Responsive Styles */
+  @media screen and (max-width: 600px) {
+    .menu-toggle {
+      display: block; /* Show menu toggle on small screens */
+    }
+  
+    .topnav {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .heading {
+      margin: 10px 0;
+      text-align: left;
+    }
+  
+    .icons {
+      margin-top: 10px;
+      justify-content: flex-end;
+    }
+  }
+  

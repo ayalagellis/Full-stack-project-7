@@ -11,6 +11,12 @@ export async function getUser(id) {
     const [rows] = await pool.query("SELECT * FROM users WHERE id = ?", [id]);
     return rows[0];
 }
+// Get a specific user by username
+export async function getUserByUsername(username) {
+    const [rows] = await pool.query("SELECT * FROM users WHERE username = ?", [username]);
+    return rows[0];
+}
+
 
 // Create a new user
 export async function createUser(first_name, last_name, username, user_password, email, address, is_manager) {
