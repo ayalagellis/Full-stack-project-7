@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'; 
 import cookieParser from 'cookie-parser';
 import usersRoute from './routes/usersRoute.js'; 
 import productsRoute from './routes/productsRoute.js';
@@ -11,6 +12,13 @@ import authRoute from './routes/authRoute.js';
 
 
 const app = express()
+// app.use(cors({
+//   origin: 'http://localhost:3000', 
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   credentials: true
+// }));
+app.use(cors()); // Allow requests from any origin
+
 app.use(express.json());
 app.use(cookieParser());
 

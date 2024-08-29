@@ -1,10 +1,35 @@
 import pool from '../db.js';
 
 // Get all orders
-export async function getAllOrders() {
-    const [rows] = await pool.query("SELECT * FROM orders");
-    return rows;
-}
+export const getAllOrders = async (filters) => {
+    let query = 'SELECT * FROM orders WHERE 1=1'; // Base query
+    const queryParams = [];
+
+    if (filters.order_dateBefore) {
+        query += ' AND order_date < ?';
+        queryParams.push(filters.order_dateBefore);
+    }
+
+    if (filters.order_status) {
+        query += ' AND order_status = ?';
+        queryParams.push(filters.order_status);
+    }
+
+    if (filters.total_price) {
+        query += ' AND total_price <= ?';
+        queryParams.push(filters.total_price);
+    }
+
+    try {
+        const [rows] = await pool.query(query, queryParams);
+        return rows;
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        throw error;
+    }
+};
+
+
 
 // Get a specific order by ID
 export async function getOrder(id) {

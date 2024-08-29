@@ -1,0 +1,76 @@
+/* Apply styling to all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+}
+
+/* Ensure the body and html cover the full height of the viewport */
+html, body {
+    height: 100%;
+    margin: 0; /* Remove default margin */
+}
+
+/* Ensure the product page container takes up the full height of the viewport and starts from the top */
+.product-page {
+    padding: 20px; /* Adjust as needed */
+    padding-top: 80px; /* Ensure content starts below the fixed header (adjust this value as needed) */
+    margin: 0; /* Ensure no extra margin */
+    min-height: 100vh; /* Make sure the container takes at least the full viewport height */
+    display: flex;
+    flex-direction: column; /* Stack child elements vertically */
+    align-items: center; /* Center-align child elements horizontally */
+}
+
+/* Heading styles */
+.product-page h1 {
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    padding-top: 10px;
+    padding-bottom: 20px; /* Space below the heading */
+    text-align: center; /* Center-align the heading text */
+    width: 100%; /* Ensure heading spans full width */
+}
+
+/* Product list container styles */
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between product items */
+    justify-content: center; /* Center-align product items horizontally */
+    width: 100%; /* Ensure the product list takes full width */
+}
+
+/* Individual product item styles */
+.product-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    width: 300px; /* Fixed width for all product items */
+    box-sizing: border-box;
+    text-align: center; /* Center-align text and image */
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    height: 500px; /* Fixed height for all product items */
+    overflow: hidden; /* Ensure content doesn't overflow */
+}
+
+/* Image styles */
+.product-image {
+    width: 100%; /* Ensure the image fits within the container width */
+    height: auto; /* Maintain aspect ratio */
+    max-height: 300px; /* Limit maximum height of the image */
+    border-radius: 8px;
+    object-fit: cover; /* Ensure image fits well within the container */
+}
+
+/* Product name and price styles */
+.product-name {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.product-price {
+    font-size: 1em;
+    color: #333;
+}

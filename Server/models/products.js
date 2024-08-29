@@ -1,17 +1,39 @@
 import pool from '../db.js';
 
-export async function getAllProducts() {
-    const [rows] = await pool.query("select * from products")
-    return rows
-}
+
+export const getProducts = async (filters) => {
+    let query = 'SELECT * FROM products WHERE 1=1'; // Base query
+    const queryParams = [];
+
+    if (filters.category) {
+        query += ' AND category = ?';
+        queryParams.push(filters.category);
+    }
+    if (filters.priceMin) {
+        query += ' AND price >= ?';
+        queryParams.push(filters.priceMin);
+    }
+    if (filters.priceMax) {
+        query += ' AND price <= ?';
+        queryParams.push(filters.priceMax);
+    }
+    if (filters.name) {
+        query += ' AND product_name LIKE ?';
+        queryParams.push(`%${filters.name}%`);
+    }
+
+    const [rows] = await pool.query(query, queryParams);
+    return rows;
+};
+
 
 
 export async function getProduct(id) {
     const [rows] = await pool.query(`
     SELECT * 
     FROM products
-    WHERE id = ${id}
-    `)
+    WHERE id = ?
+    `, [id])
     return rows[0]
   }
 
