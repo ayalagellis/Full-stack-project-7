@@ -1,14 +1,5 @@
   /* General Styles */
-  .home-container {
-    position: relative;
-    height: 100vh;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
   
-/* Fixed header styles (from your header CSS) */
 .topnav {
   position: fixed; /* Fix the nav bar to the top */
   top: 0;

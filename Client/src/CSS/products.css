@@ -7,14 +7,13 @@
 
 /* Ensure the body and html cover the full height of the viewport */
 html, body {
-    height: 100%;
     margin: 0; /* Remove default margin */
 }
 
 /* Ensure the product page container takes up the full height of the viewport and starts from the top */
 .product-page {
     padding: 20px; /* Adjust as needed */
-    padding-top: 80px; /* Ensure content starts below the fixed header (adjust this value as needed) */
+    padding-top: 200px; /* Ensure content starts below the fixed header (adjust this value as needed) */
     margin: 0; /* Ensure no extra margin */
     min-height: 100vh; /* Make sure the container takes at least the full viewport height */
     display: flex;
@@ -51,7 +50,7 @@ html, body {
     text-align: center; /* Center-align text and image */
     display: flex;
     flex-direction: column; /* Stack content vertically */
-    height: 500px; /* Fixed height for all product items */
+    height: 600px; /* Fixed height for all product items */
     overflow: hidden; /* Ensure content doesn't overflow */
 }
 
