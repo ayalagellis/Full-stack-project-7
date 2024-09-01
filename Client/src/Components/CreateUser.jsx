@@ -12,9 +12,22 @@ const CreateUser = ({ is_manager = false }) => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    const usernameRegex = /^.{5,}$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        // Validate username and password
+        if (!usernameRegex.test(username)) {
+                    setError('Username must be at least 5 characters long.');
+                    return;
+         }
+        
+        if (!passwordRegex.test(user_password)) {
+                    setError('Password must be at least 8 characters long and contain at least one letter and one number.');
+                    return;
+        }
+        
         try {
             const response = await fetch (`http://localhost:3000/users`, {
                 method: 'POST',

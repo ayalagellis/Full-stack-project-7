@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import userImg from '../assets/user.png'; 
 import cartImg from '../assets/grocery-store.png'; 
-
+import homeImage from '../assets/home.png'; 
+import logoutImage from '../assets/logout.png'; 
 
 
 
@@ -18,11 +19,24 @@ const toggleMenu = () => {
   setMenuOpen(!menuOpen);
 };
 
+const logout = () => {
+
+  
+};
+
+
     return(
         <header className="topnav">
         <button className="menu-toggle" onClick={toggleMenu}>
           &#9776; {/* Hamburger icon */}
         </button>
+        <Link to="/"> 
+          <img src= {homeImage} style={{ marginRight: '20px' }} alt="Go to Home" />
+        </Link>
+        <Link to="/" onClick={logout}>
+          <img src= {logoutImage} alt="logout" />
+        </Link>
+
         {menuOpen && (
           <nav className="menu">
             <ul>
@@ -40,6 +54,8 @@ const toggleMenu = () => {
         <Link to="/cart">
           <img src= {cartImg} alt="Go to Cart" />
         </Link>
+
+
 
       </header>
     );
