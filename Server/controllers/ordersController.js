@@ -20,9 +20,26 @@ export const createOrder1 = async (req, res) => {
 export const updateOrder1 = async (req, res) => {
     const id = req.params.id;
     const { shipping_address, order_status, total_price } = req.body;
-    const updatedOrder = await updateOrder(id, shipping_address, order_status, total_price);
-    res.send(updatedOrder);
+    const updateData = {};
+    if (shipping_address !== undefined) updateData.shipping_address = shipping_address;
+    if (order_status !== undefined) updateData.order_status = order_status;
+    if (total_price !== undefined) updateData.total_price = total_price;
+    try {
+        if (Object.keys(updateData).length === 0) {
+            return res.status(400).send('No fields to update');
+        }
+
+        const updatedOrder = await updateOrder(id, shipping_address, order_status, total_price);
+        res.send(updatedOrder);
+        } catch (error) {
+        console.error('Error updating order:', error);
+        res.status(500).send('Error updating order');
+    }
+
 };
+
+
+
 
 export const deleteOrder1 = async (req, res) => {
     const id = req.params.id;

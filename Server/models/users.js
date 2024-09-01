@@ -24,6 +24,7 @@ export async function createUser(first_name, last_name, username, user_password,
     INSERT INTO users (first_name, last_name, username, user_password, email, address, is_manager)
     VALUES (?, ?, ?, ?, ?, ?, ?)
     `, [first_name, last_name, username, user_password, email, address, is_manager]);
+    console.log(result)
     return result;
 }
 

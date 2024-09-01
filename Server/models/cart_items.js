@@ -12,6 +12,23 @@ export async function getCartItem(id) {
     return rows[0];
 }
 
+export async function getCartItemsOfCart(id) {
+    const [rows] = await pool.query(`SELECT 
+    p.product_name,
+    p.product_description,
+    p.image_url,
+    ci.price AS cart_item_price,
+    ci.quantity AS cart_item_quantity
+    FROM 
+    cart_items ci
+    JOIN 
+    products p ON ci.product_id = p.id
+    WHERE 
+    ci.cart_id = ?`, [id]);
+    return rows;
+}
+
+
 // Create a new cart item
 export async function createCartItem(cart_id, product_id, quantity, price) {
     const [result] = await pool.query(`

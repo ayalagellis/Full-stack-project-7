@@ -1,6 +1,7 @@
 import express from 'express';
-import { getUserByUsername } from '../models/users.js'; // Adjust path as needed
-import { verifyPassword, generateToken } from '../helper.js';
+import { getUserByUsername, createUser } from '../models/users.js';
+import {createCart1, getCartByCustomerId1} from '../controllers/cartController.js'
+import { verifyPassword, generateToken, hashPassword } from '../helper.js';
 
 const router = express.Router();
 
@@ -18,16 +19,35 @@ router.post('/login', async (req, res) => {
         }
         const token = generateToken(user.id);
         res.cookie('User', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
-        res.send('Logged in');
+        const cart = await createCartIfNotExists(user.id);
+        res.json({
+            message: 'Logged in',
+            user: {
+                id: user.id,
+                username: user.username,
+            },
+            cartId: cart.id
+        });
+
     } catch (error) {
         res.status(500).send('Server error');
     }
 });
 
-// Logout endpoint
-router.post('/logout', (req, res) => {
-    res.clearCookie('token');
-    res.send('Logged out');
-});
+
+
+
+async function createCartIfNotExists(userId) {
+    // Check if cart already exists for this user
+    const existingCart = await getCartByCustomerId1(userId);
+    if (existingCart) {
+        return existingCart;
+    }
+    // Create a new cart 
+    const cart = await createCart1(userId);
+    return cart;
+}
+
+
 
 export default router;

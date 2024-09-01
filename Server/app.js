@@ -4,11 +4,10 @@ import cookieParser from 'cookie-parser';
 import usersRoute from './routes/usersRoute.js'; 
 import productsRoute from './routes/productsRoute.js';
 import cartRoute from './routes/cartRoute.js';
-import cartItemsRoute from './routes/cart_ItemsRoute.js';
+import cartItemsRoute from './routes/cart_itemsRoute.js';
 import ordersRoute from './routes/ordersRoute.js';
 import orderItemsRoute from './routes/order_itemsRoute.js';
 import discountsRoute from './routes/discountsRoute.js';
-import authRoute from './routes/authRoute.js';
 
 
 const app = express()
@@ -24,7 +23,6 @@ app.use(cookieParser());
 
 
 //Routes
-app.use('/auth', authRoute);
 app.use('/users', usersRoute);
 app.use('/products', productsRoute); // Product routes
 app.use('/cart', cartRoute); // Cart routes

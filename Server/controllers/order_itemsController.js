@@ -20,9 +20,24 @@ export const createOrderItem1 = async (req, res) => {
 export const updateOrderItem1 = async (req, res) => {
     const id = req.params.id;
     const { order_id, product_id, quantity, price } = req.body;
-    const updatedOrderItem = await updateOrderItem(id, order_id, product_id, quantity, price);
-    res.send(updatedOrderItem);
+    const updateData = {};
+    if (quantity !== undefined) updateData.quantity = quantity;
+    if (price !== undefined) updateData.price = price;
+    try {
+        if (Object.keys(updateData).length === 0) {
+            return res.status(400).send('No fields to update');
+        }
+
+        const updatedOrderItem = await updateOrderItem(id, order_id, product_id, quantity, price);
+        res.send(updatedOrderItem);
+            } catch (error) {
+        console.error('Error updating order item:', error);
+        res.status(500).send('Error updating orderitem');
+    }
+
+
 };
+
 
 export const deleteOrderItem1 = async (req, res) => {
     const id = req.params.id;

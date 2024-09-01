@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Header from "./header";
 import ProductModal from "./ProductModal";
 import UpdateModal from "./UpdateModal"; 
+import { useUser } from './UserContext'; 
 import "../CSS/products.css"; 
 
 
@@ -15,7 +16,7 @@ function Products() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const [currentProduct, setCurrentProduct] = useState(null);
-
+    const { user } = useUser(); 
 
     useEffect(() => {
         fetchProducts();
@@ -99,6 +100,46 @@ function Products() {
             }
         } catch (error) {
             console.error('Failed to update product:', error);
+        }
+    };
+
+
+    const handleAddToCart = async (product) => {
+        if (!user || !user.cartData) {
+            alert('You must be logged in to add items to your cart.');
+            return;
+        }
+        const quantity = selectedQuantities[product.id] || 1; // Default to 1 if no quantity is selected
+        if (product.quantity < quantity) {
+            alert('Selected amount is too much.');
+            return;
+        }
+        try {
+            // Use the cart ID from the user context
+            console.log(user)
+
+            const cartId = user.cartData.id;
+            const productId  = product['id'];
+            const productPrice = parseFloat(product.price); // Converting price from string to number
+
+            const response = await fetch('http://localhost:3000/cart-items', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    cartId,
+                    productId,
+                    quantity,
+                    productPrice
+                }),
+            });
+
+            if (response.ok) {
+                alert('Item added to cart successfully.');
+            } 
+        } catch (error) {
+            console.error('Failed to add item to cart:', error);
         }
     };
 
