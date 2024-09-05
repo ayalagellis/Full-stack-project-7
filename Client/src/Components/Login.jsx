@@ -8,10 +8,20 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [user_password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const { setUser } = useUser(); // Get the setUser function from context
+    const { user, setUser } = useUser(); // Get the setUser function from context
     const navigate = useNavigate();
 
-
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            while (cookie.charAt(0) == ' ') cookie = cookie.substring(1, cookie.length);
+            if (cookie.indexOf(nameEQ) == 0) return cookie.substring(nameEQ.length, cookie.length);
+        }
+        return null;
+    }
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -32,7 +42,8 @@ const Login = () => {
                 // Handle successful login
 
                 const loginData = await response.json();
-                const { id, username, is_manager } = loginData; // Extract user ID and token
+                const { id, username, is_manager } = loginData; 
+                console.log(is_manager)
 
 
                 const customer_id = id;
@@ -55,6 +66,11 @@ const Login = () => {
               // Store user details in context
 
                  setUser({ id, username, is_manager, cartData });
+                 console.log(user)
+
+                 var storedNameCookie = getCookie('name');
+                 var storedPwCookie = getCookie('pw');
+
 
 
                 alert('Login successful');
@@ -92,7 +108,8 @@ const Login = () => {
                 />
                 <button type="submit">Login</button>
             </form>
-            <p>
+            <br></br>
+            <p className= "createNew">
                 Don't have an account? <a href="/create-user">Create one here</a>
             </p>
         </div>

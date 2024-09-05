@@ -1,5 +1,11 @@
 /* LoginForm.css */
 
+.login-container{
+ margin-top: 20px;
+}
+#Hcontainer{
+  text-align: center;
+}
 .login-background {
     display: flex;
     justify-content: center;
@@ -11,6 +17,7 @@
   }
   
   .login-form {
+    margin-left:500px;
     background-color: #ffffff;
     padding: 2rem;
     border-radius: 12px;
@@ -68,5 +75,9 @@
   .register-section h2 {
     text-align: center;
     color: #333333;
+  }
+  .createNew{
+    margin-left:500px;
+
   }
   

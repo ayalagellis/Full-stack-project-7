@@ -16,6 +16,18 @@ const CreateUser = ({ is_manager = false }) => {
     const usernameRegex = /^.{5,}$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
+    function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+    
+    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         // Validate username and password
@@ -46,6 +58,12 @@ const CreateUser = ({ is_manager = false }) => {
                 }),
             });
             if (response.ok) {
+                let endOfDay = new Date();
+                endOfDay.setHours(23, 59, 59, 999); // end of the day 
+                let millisecondsUntilEndOfDay = endOfDay.getTime() - new Date().getTime();
+                setCookie('name', username , millisecondsUntilEndOfDay);
+                setCookie('pw', user_password, millisecondsUntilEndOfDay);
+        
                 navigate('/login');
             } else {
                 setError('Registration failed');
@@ -72,6 +90,7 @@ const CreateUser = ({ is_manager = false }) => {
                             required
                         />
                     </div>
+                    <br></br>
                     <div>
                         <label htmlFor="lastName">Last Name</label>
                         <input
@@ -83,6 +102,8 @@ const CreateUser = ({ is_manager = false }) => {
                         />
                     </div>
                 </div>
+                <br></br>
+
                 <div className="form-row">
                     <div>
                         <label htmlFor="username">Username</label>
@@ -94,6 +115,8 @@ const CreateUser = ({ is_manager = false }) => {
                             required
                         />
                     </div>
+                    <br></br>
+
                     <div>
                         <label htmlFor="password">Password</label>
                         <input
@@ -105,6 +128,8 @@ const CreateUser = ({ is_manager = false }) => {
                         />
                     </div>
                 </div>
+                <br></br>
+
                 <div className="form-row">
                     <div>
                         <label htmlFor="email">Email</label>
@@ -116,6 +141,8 @@ const CreateUser = ({ is_manager = false }) => {
                             required
                         />
                     </div>
+                    <br></br>
+
                     <div>
                         <label htmlFor="address">Address</label>
                         <input

@@ -1,7 +1,8 @@
 import { getAllOrders, getOrder, createOrder, updateOrder, deleteOrder } from '../models/orders.js';
 
 export const getAllOrders1 = async (req, res) => {
-    const orders = await getAllOrders();
+    const filters = req.query;
+    const orders = await getAllOrders(filters);
     res.send(orders);
 };
 

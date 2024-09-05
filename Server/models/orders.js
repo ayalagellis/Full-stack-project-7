@@ -1,13 +1,19 @@
 import pool from '../db.js';
 
 // Get all orders
-export const getAllOrders = async (filters) => {
+export const getAllOrders = async (filters={}) => {
     let query = 'SELECT * FROM orders WHERE 1=1'; // Base query
     const queryParams = [];
+    
+    if (filters.customer_id) {
+        query += ' AND customer_id = ?';
+        queryParams.push(filters.customer_id);
+    }
 
-    if (filters.order_dateBefore) {
+
+    if (filters.order_date) {
         query += ' AND order_date < ?';
-        queryParams.push(filters.order_dateBefore);
+        queryParams.push(filters.order_date);
     }
 
     if (filters.order_status) {

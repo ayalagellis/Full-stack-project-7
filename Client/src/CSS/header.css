@@ -1,123 +1,115 @@
+/* header.css */
+
 /* General Styles */
-body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.topnav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  position: relative;
 }
 
-.topnav {
-  position: fixed; /* Fix the nav bar to the top */
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 10px 20px; /* Adjust padding as needed */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: rgba(215, 206, 206, 0.8);
-  z-index: 1000; /* Ensure it's on top of other elements */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
-  transition: padding 0.3s, font-size 0.3s; /* Smooth transition for height changes */
+
+.topnav .heading {
+  font-size: 1.5rem;
+  margin: 0;
+  color: #fff;
+  margin-left: 450px;
+
 }
 
 .menu-toggle {
-  margin-right: 50px;
+  margin-right: 40px;
   background: none;
   border: none;
-  font-size: 30px;
   color: #fff;
+  font-size: 1.5rem;
   cursor: pointer;
-  display: none; /* Hide menu toggle by default, shown on small screens */
+  display: none; /* Hidden by default, will show on smaller screens */
 }
 
+.topnav a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.topnav a img {
+  height: 24px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.topnav a img:last-of-type {
+  margin-right: 0;
+}
+
+/* Menu Styles */
 .menu {
-  display: none; /* Hide menu by default */
-  position: absolute;
-  top: 60px; /* Position below the header */
-  left: 0;
-  background: rgba(0, 0, 0, 0.8);
-  width: 100%;
-  text-align: center;
+  display: flex; /* Display the menu items horizontally */
+  align-items: center;
+  gap: 15px;
 }
 
 .menu ul {
-  list-style-type: none;
+  display: flex;
+  list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.menu li {
-  margin: 10px 0;
+.menu ul li {
+  margin:10px;
+  position: relative;
 }
 
-.menu a {
+.menu ul li a {
+  display: block;
+  padding: 10px 20px;
   color: #fff;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 1.2rem;
+  background-color: #333; /* Ensure background color is set */
+  transition: background-color 0.3s, transform 0.3s;
 }
 
-.menu a:hover {
-  text-decoration: underline;
+.menu ul li a:hover {
+  background-color: #555;
+  transform: scale(1.05); /* Slightly increase size on hover */
 }
 
-.heading {
-  color: #fff;
-  font-size: 24px;
-  flex-grow: 1; /* Take up remaining space */
-}
-
-.icons {
-  display: flex;
-  gap: 15px; /* Space between icons */
-}
-
-.nav-icon {
-  width: 24px; /* Adjust icon size */
-  height: auto;
-}
-
-@media screen and (max-width: 768px) {
+/* Responsive Styles */
+@media (max-width: 768px) {
   .menu-toggle {
-      display: block; /* Show menu toggle on small screens */
-  }
-
-  .topnav {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 8px 15px; /* Adjust padding for smaller screens */
-  }
-
-  .heading {
-      font-size: 20px; /* Adjust font size for smaller screens */
-  }
-
-  .icons {
-      margin-top: 10px;
-      justify-content: center;
-      width: 100%;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .topnav {
-      padding: 5px 10px; /* Further reduce padding */
-  }
-
-  .heading {
-      font-size: 18px; /* Further adjust font size */
+      display: block; /* Show hamburger icon on smaller screens */
   }
 
   .menu {
-      display: block; /* Show menu when open */
+      display: none; /* Hide menu items by default on mobile */
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #333;
+      width: 100%;
+      flex-direction: column;
   }
-}
 
-@media screen and (max-width: 400px) {
-  .topnav {
-      padding: 4px 8px; /* Minimal padding for very small screens */
+  .menu ul {
+      flex-direction: column;
+      padding-top: 10px;
   }
 
-  .heading {
-      font-size: 16px; /* Minimal font size for very small screens */
+  .menu ul li {
+      border-bottom: 1px solid #444;
+  }
+
+  .menu ul li a {
+      padding: 15px;
+      text-align: center;
+  }
+
+  .menu.open {
+      display: flex; /* Show menu items when menu is open */
   }
 }

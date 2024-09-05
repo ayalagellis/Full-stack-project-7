@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Header from "./header";
 import ProductModal from "./ProductModal";
 import UpdateModal from "./UpdateModal"; 
 import { useUser } from './UserContext'; 
+
 import "../CSS/products.css"; 
+import soundtrumpet from '../assets/trumpet.mp3'; 
+
 
 
 
@@ -16,17 +19,21 @@ function Products() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const [currentProduct, setCurrentProduct] = useState(null);
-    const { user } = useUser(); 
-    const isManager = user?.is_manager || false;
+    const { user, setUser } = useUser(); 
+    const isManager = user?.is_manager === 1; // Updated to check if user.is_manager equals 1
+    const audioRef = useRef(null); // Create a reference for the audio element
+
 
 
     useEffect(() => {
+        console.log(user)
         fetchProducts();
     }, [category]);
     
     
         const fetchProducts = async () => {
           try {
+            console.log(user)
             const response = await fetch(`http://localhost:3000/products?category=${category}`);
             const productsData = await response.json();
             setProducts(productsData);
@@ -54,6 +61,8 @@ function Products() {
             });
 
             if (response.ok) {
+                console.log(user)
+
                 await response.json();
                 fetchProducts();
                 setIsModalOpen(false);
@@ -136,11 +145,19 @@ function Products() {
             });
 
             if (response.ok) {
-               // let priceChange = productPrice * quantity;
-               // let updatedCartData = { ...user.cartData, total_price: user.cartData.total_price + priceChange };
-               // setUser({ ...user, cartData: updatedCartData });
-        
-                alert('Item added to cart successfully.');
+               let priceChange = productPrice * quantity;
+               let totalPrice = parseFloat(user.cartData.total_price) || 0; 
+
+               let updatedCartData = { ...user.cartData, total_price: totalPrice + priceChange };
+               setUser({ ...user, cartData: updatedCartData });
+              try {
+                await audioRef.current.play();
+            } catch (error) {
+                console.error('Failed to play sound:', error);
+            }
+
+
+            alert('Item added to cart successfully.');
             } 
         } catch (error) {
             console.error('Failed to add item to cart:', error);
@@ -148,11 +165,18 @@ function Products() {
     };
 
 
+
+
     return (
         <>
         <Header/>
 
         <div className="product-page">
+        <audio ref={audioRef}>
+                <source src={soundtrumpet} type="audio/mp3" />
+                Your browser does not support the audio element.
+            </audio>
+
 
             <h1>{category}</h1>
             <div className="product-list">
@@ -176,23 +200,27 @@ function Products() {
                                         <option key={index} value={index + 1}>
                                             {index + 1}
                                         </option> ))} </select>
+                                        <br></br>
                             <button className="add-to-cart-button" 
                             onClick={() => handleAddToCart(product)} disabled={product.quantity === 0} >Add to Cart </button>
+                                        <br></br>
+
                             </>
                         )}
-                        
-                        {isManager && ( <>
+
+                        {/* {isManager && ( <> */}
                         <button onClick={() => { setCurrentProduct(product); setIsUpdateModalOpen(true); }}>Update Item</button>
+                        <br></br>
                         <button onClick={() => handleDeleteProduct(product.id)}>Delete Item</button>
-                        </> )}
+                        {/* </> )} */}
 
 
                     </div>
                 ))}
             </div>
-            {isManager && ( <>
+<br></br>
             <button onClick={() => setIsModalOpen(true)}>Add Product</button>
-            </> )}
+
 
             <ProductModal 
                 isOpen={isModalOpen} 
@@ -207,6 +235,7 @@ function Products() {
                 product={currentProduct}
             />
             )}
+
 
         </div>
         </>

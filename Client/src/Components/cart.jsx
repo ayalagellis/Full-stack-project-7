@@ -15,7 +15,7 @@ function Cart() {
     const [creditCardExpiry, setCreditCardExpiry] = useState('');
     const [creditCardCVC, setCreditCardCVC] = useState('');
     const navigate = useNavigate(); 
-    const { user } = useUser();
+    const { user, setUser } = useUser();
 
     const cartData = user?.cartData || {};
     const cartId = cartData.id || 0;
@@ -36,12 +36,8 @@ function Cart() {
                 }
             });
 
-            //const cartItems = await response.json();
-            //setCartItems(cartItems);
-            //console.log(cartItems);
            const cartItemss = await response.json();
            setCartItems(cartItemss);
-           console.log(cartItemss);
 
 
         } catch (error) {
@@ -57,10 +53,6 @@ function Cart() {
     const handleCreditCardSubmit = async (e) => {
         e.preventDefault();
         try {
-
-            // const numericCartId = parseInt(cartId, 10);
-            //console.log('cartId:', cartId);
-            //console.log('shippingAddress:', shippingAddress);
         
             const response = await fetch(`http://localhost:3000/cart/${cartId}`, {
                 method: 'POST',
@@ -73,6 +65,8 @@ function Cart() {
                 })
             });
             if (response.ok) {
+
+               setUser({ id, username, is_manager, cartData: {id, customer_id, total_price: null} });
                 const result = await response.json();
                 const { orderId } = result; // Assuming the response contains the new order ID
                 navigate(`/thank-you?orderId=${orderId}`); // Pass orderId as a query parameter
@@ -84,6 +78,31 @@ function Cart() {
         }
     };
 
+    const handleDeleteItem = async (itemId, productPrice, quantity) => {
+        try {
+            const response = await fetch(`http://localhost:3000/cart-items/${itemId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (response.ok) {
+                setCartItems(cartItems.filter(item => item.cart_item_id !== itemId));
+                let priceChange = productPrice * quantity;
+                let totalPrice = parseFloat(user.cartData.total_price) || 0; 
+                let updatedCartData = { ...user.cartData, total_price: totalPrice - priceChange };
+                setUser({ ...user, cartData: updatedCartData });
+ 
+            } else {
+                console.error('Failed to delete item');
+            }
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
+    };
+
+
     return (
         <div className="container">
             <Header />
@@ -92,14 +111,28 @@ function Cart() {
             {cartItems.length > 0 ? (
                 <>
                     <ul>
-                        {cartItems.map((item, index) => (
-                            <li key={index + 1} className="product-item">
+                        {cartItems.map((item) => (
+                            <li key={item.cart_item_id} className="product-item">
                                 <img src={item.image_url} alt={item.product_name} className="product-image" />
                                 <div className="product-details">
                                     <h2 className="product-name">{item.product_name}</h2>
+                                    <br></br>
+
                                     <p>{item.product_description}</p>
+                                    <br></br>
+
                                     <p className="product-price">Price: ${item.cart_item_price}</p>
+                                    <br></br>
+
                                     <p>Quantity: {item.cart_item_quantity}</p>
+                                    <br></br>
+
+                                    <button 
+                                        className="delete-button" 
+                                        onClick={() => handleDeleteItem(item.cart_item_id, item.cart_item_price,item.cart_item_quantity )}
+                                    >
+                                        &#x2715; {/* X symbol */}
+                                    </button>
                                 </div>
                             </li>
                         ))}

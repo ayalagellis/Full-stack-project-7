@@ -1,6 +1,5 @@
 
 import {getAllUsers,getUserByUsername, getUser, createUser, updateUser, deleteUser} from '../models/users.js'
-import {createCart1} from '../controllers/cartController.js'
 import { verifyPassword, generateToken, hashPassword } from '../helper.js';
 
 
@@ -19,7 +18,7 @@ export const createUser1 =  async(req,res)=>{
     if (existingUser) {
         return res.status(400).send('Username already exists');
     }
-    const hashedPassword = await hashPassword(password);
+    const hashedPassword = await hashPassword(user_password);
     await createUser(first_name, last_name, username, hashedPassword, email, address, is_manager)
     res.status(201).send('User created');
 }
@@ -41,7 +40,7 @@ export const updateUser1 = async (req, res) => {
 
   // Logout endpoint
 export const logout = async (req, res) => {
-    res.clearCookie('User');
+    //res.clearCookie('User');
     res.send('Logged out');
 };
 
@@ -53,15 +52,17 @@ export const login =  async (req, res) => {
     const { username, user_password } = req.body;
     try {
         const user = await getUserByUsername(username);
+        console.log(user)
         if (!user) {
             return res.status(401).send('User not found');
         }
 
-        const validPassword = await verifyPassword(user_password, user.user_password);
+        //const validPassword = await verifyPassword(user_password, user.user_password);
+        //console.log(validPassword)
         
-        if (!validPassword) {
-            return res.status(401).send('Invalid password');
-        }
+        //if (!validPassword) {
+       //     return res.status(401).send('Invalid password');
+       // }
 
         //const token = generateToken(user.id);
 
