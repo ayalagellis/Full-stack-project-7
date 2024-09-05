@@ -15,8 +15,12 @@ export async function getCartItem(id) {
 export async function getCartItemsOfCart(id) {
     const [rows] = await pool.query(`SELECT 
     p.product_name,
+    p.id AS product_id,
+    p.quantity,
     p.product_description,
     p.image_url,
+    p.price,
+    ci.id AS cart_item_id,
     ci.price AS cart_item_price,
     ci.quantity AS cart_item_quantity
     FROM 
@@ -31,11 +35,31 @@ export async function getCartItemsOfCart(id) {
 
 // Create a new cart item
 export async function createCartItem(cart_id, product_id, quantity, price) {
+    const [existingItems] = await pool.query(`
+        SELECT * FROM cart_items
+        WHERE cart_id = ? AND product_id = ?
+    `, [cart_id, product_id]);
+    if (existingItems.length > 0) {
+        // If the item exists, update the quantity
+        const existingItem = existingItems[0];
+        const newQuantity = existingItem.quantity + quantity;
+
+        const [result] = await pool.query(`
+            UPDATE cart_items
+            SET quantity = ?
+            WHERE cart_id = ? AND product_id = ?
+        `, [newQuantity, cart_id, product_id]);
+        return result;
+    }
+    else{
+
     const [result] = await pool.query(`
     INSERT INTO cart_items (cart_id, product_id, quantity, price)
     VALUES (?, ?, ?, ?)
     `, [cart_id, product_id, quantity, price]);
+
     return result;
+}
 }
 
 // Update an existing cart item

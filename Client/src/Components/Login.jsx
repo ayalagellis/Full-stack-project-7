@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useUser } from './UserContext';
 import { useNavigate } from 'react-router-dom'; 
+import Header from "./header";
 import "../CSS/Login.css"; 
 
 const Login = () => {
@@ -29,11 +30,9 @@ const Login = () => {
 
             if (response.ok) {
                 // Handle successful login
-                console.log("hi");
 
                 const loginData = await response.json();
-                const { id, username } = loginData; // Extract user ID and token
-                console.log("hi");
+                const { id, username, is_manager } = loginData; // Extract user ID and token
 
 
                 const customer_id = id;
@@ -54,7 +53,9 @@ const Login = () => {
 
                const cartData = await cartResponse.json();
               // Store user details in context
-                setUser({ id, username, cartData });
+
+                 setUser({ id, username, is_manager, cartData });
+
 
                 alert('Login successful');
 
@@ -69,6 +70,7 @@ const Login = () => {
 
     return (
         <div className="login-container">
+            <Header></Header>
             <h2>Login</h2>
             {error && <div className="error-message">{error}</div>}
             <form className="login-form" onSubmit={handleSubmit}>

@@ -13,7 +13,7 @@ html, body {
 /* Ensure the product page container takes up the full height of the viewport and starts from the top */
 .product-page {
     padding: 20px; /* Adjust as needed */
-    padding-top: 200px; /* Ensure content starts below the fixed header (adjust this value as needed) */
+    padding-top: 10px; /* Ensure content starts below the fixed header (adjust this value as needed) */
     margin: 0; /* Ensure no extra margin */
     min-height: 100vh; /* Make sure the container takes at least the full viewport height */
     display: flex;

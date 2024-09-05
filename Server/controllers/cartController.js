@@ -1,4 +1,13 @@
 import { getAllCarts,getCartByCustomerId, getCart, createCart, updateCart, deleteCart } from '../models/cart.js';
+import {createOrder} from '../models/orders.js';
+import {createOrderItem} from '../models/order_items.js';
+import {getProduct, updateProduct} from '../models/products.js';
+import {getCartItemsOfCart, deleteCartItem} from '../models/cart_items.js'
+import pool from '../db.js';
+
+
+
+
 
 export const getAllCarts1 = async (req, res) => {
     const carts = await getAllCarts();
@@ -57,4 +66,71 @@ export const deleteCart1 = async (req, res) => {
     const id = req.params.id;
     await deleteCart(id);
     res.send({ message: 'Cart deleted successfully' });
+};
+
+
+// Function to process a cart and create an order
+export const processCart = async (req, res) => {
+    const connection = await pool.getConnection();
+
+    try {
+        const { cartId, shippingAddress } = req.body;
+
+        const cart = await getCart(cartId);
+        if (!cart) {
+            throw new Error('Cart not found');
+        }
+
+        const cartItems = await getCartItemsOfCart(cartId);
+
+        if (cartItems.length === 0) {
+            throw new Error('No items in the cart');
+        }
+
+        // Update product quantities
+        for (const item of cartItems) {
+            const productId = item.product_id;
+            const quantityToUpdate = item.cart_item_quantity;
+            const product = await getProduct(productId);
+
+
+            if (product) {
+                const newQuantity = product.quantity - quantityToUpdate;
+                if (newQuantity < 0) {
+                    throw new Error(`Not enough stock for product ID ${productId}`);
+                }
+                await updateProduct(productId, { quantity: newQuantity });
+            } else {
+                throw new Error(`Product ID ${productId} not found`);
+            }
+        }
+
+        // Create the order
+        const { customer_id, total_price } = cart;
+        const orderStatus = 'pending'; // Initial order status
+        const order = await createOrder(customer_id, shippingAddress, orderStatus, total_price);
+
+        // Create order items
+         for (const item of cartItems) {
+             await createOrderItem(order.insertId, item.product_id, item.cart_item_quantity, item.price);
+         }
+
+        // Delete cart items
+        for (const item of cartItems) {
+            await deleteCartItem(item.cart_item_id);
+        }
+
+        // Delete the cart
+        await deleteCart(cartId);
+
+        await connection.commit();
+        res.json({ success: true, orderId: order.insertId });
+
+    } catch (error) {
+        await connection.rollback();
+        console.error('Error processing cart:', error);
+        res.status(500).json({ success: false, error: error.message });
+    } finally {
+        connection.release();
+    }
 };

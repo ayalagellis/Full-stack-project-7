@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
+import Header from "./header";
 import "../CSS/CreateUser.css"; 
 
 const CreateUser = ({ is_manager = false }) => {
@@ -56,6 +57,7 @@ const CreateUser = ({ is_manager = false }) => {
 
     return (
         <div className="create-user-container">
+            <Header></Header>
             <h2>Create User</h2>
             {error && <div className="error-message">{error}</div>}
             <form className="create-user-form" onSubmit={handleSubmit}>

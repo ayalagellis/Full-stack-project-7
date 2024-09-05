@@ -6,6 +6,8 @@ import Cart from "./Components/cart";
 import Products from "./Components/Products";
 import CreateUser from "./Components/CreateUser";
 import NotFound from "./Components/NotFound"; 
+import Thanks from "./Components/Thanks"; 
+
 
 
 
@@ -20,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/create-user" element={<CreateUser />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/thank-you" element={<Thanks />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

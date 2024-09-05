@@ -17,6 +17,8 @@ function Products() {
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const [currentProduct, setCurrentProduct] = useState(null);
     const { user } = useUser(); 
+    const isManager = user?.is_manager || false;
+
 
     useEffect(() => {
         fetchProducts();
@@ -115,8 +117,6 @@ function Products() {
             return;
         }
         try {
-            // Use the cart ID from the user context
-            console.log(user)
 
             const cartId = user.cartData.id;
             const productId  = product['id'];
@@ -136,6 +136,10 @@ function Products() {
             });
 
             if (response.ok) {
+               // let priceChange = productPrice * quantity;
+               // let updatedCartData = { ...user.cartData, total_price: user.cartData.total_price + priceChange };
+               // setUser({ ...user, cartData: updatedCartData });
+        
                 alert('Item added to cart successfully.');
             } 
         } catch (error) {
@@ -176,14 +180,20 @@ function Products() {
                             onClick={() => handleAddToCart(product)} disabled={product.quantity === 0} >Add to Cart </button>
                             </>
                         )}
+                        
+                        {isManager && ( <>
                         <button onClick={() => { setCurrentProduct(product); setIsUpdateModalOpen(true); }}>Update Item</button>
                         <button onClick={() => handleDeleteProduct(product.id)}>Delete Item</button>
+                        </> )}
+
 
                     </div>
                 ))}
             </div>
-
+            {isManager && ( <>
             <button onClick={() => setIsModalOpen(true)}>Add Product</button>
+            </> )}
+
             <ProductModal 
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)} 

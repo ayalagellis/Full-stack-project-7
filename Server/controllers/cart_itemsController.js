@@ -14,7 +14,6 @@ export const getCartItem1 = async (req, res) => {
 
 export const getCartItemsOfCart1 = async (req, res) => {
     const id = req.params.cart_id; //cart id
-    console.log(id)
     const cartItem = await getCartItemsOfCart(id); //getting all cart items
     res.send(cartItem);
 };
