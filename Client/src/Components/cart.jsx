@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./header";
-import { useUser } from './UserContext';
 //import {Thanks} from './Thanks';
+import {getCookie} from "./UserContext"
+
 import "../CSS/cart.css";
 
 
@@ -14,22 +15,27 @@ function Cart() {
     const [creditCardNumber, setCreditCardNumber] = useState('');
     const [creditCardExpiry, setCreditCardExpiry] = useState('');
     const [creditCardCVC, setCreditCardCVC] = useState('');
-    const navigate = useNavigate(); 
-    const { user, setUser } = useUser();
+    const userDataCookie = getCookie('user-data');
+    const decodedCookie = decodeURIComponent(userDataCookie);      
+    const userData = JSON.parse(decodedCookie);        
+    const customer_id = userData.customer_id;
+    const username = userData.username;
+    const manager = userData.manager;
+    const cart_id = userData.cart_id;
+    const total_price = userData.total_price;
 
-    const cartData = user?.cartData || {};
-    const cartId = cartData.id || 0;
-    const totalPrice = cartData.total_price || 0;
+    const navigate = useNavigate(); 
+
 
     useEffect(() => {
-        if (cartId) {
+        if (cart_id) {
             fetchCartItems();
         }
-    }, [cartId]);
+    }, [cart_id]);
 
     const fetchCartItems = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/cart-items/${cartId}`, {
+            const response = await fetch(`http://localhost:3000/cart-items/${cart_id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,19 +60,18 @@ function Cart() {
         e.preventDefault();
         try {
         
-            const response = await fetch(`http://localhost:3000/cart/${cartId}`, {
+            const response = await fetch(`http://localhost:3000/cart/${cart_id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    cartId,
+                    cart_id,
                     shippingAddress
                 })
             });
             if (response.ok) {
 
-               setUser({ id, username, is_manager, cartData: {id, customer_id, total_price: null} });
                 const result = await response.json();
                 const { orderId } = result; // Assuming the response contains the new order ID
                 navigate(`/thank-you?orderId=${orderId}`); // Pass orderId as a query parameter
@@ -90,9 +95,8 @@ function Cart() {
             if (response.ok) {
                 setCartItems(cartItems.filter(item => item.cart_item_id !== itemId));
                 let priceChange = productPrice * quantity;
-                let totalPrice = parseFloat(user.cartData.total_price) || 0; 
-                let updatedCartData = { ...user.cartData, total_price: totalPrice - priceChange };
-                setUser({ ...user, cartData: updatedCartData });
+               // let totalPrice = parseFloat(user.cartData.total_price) || 0; 
+                //let updatedCartData = { ...user.cartData, total_price: totalPrice - priceChange };
  
             } else {
                 console.error('Failed to delete item');
@@ -137,7 +141,7 @@ function Cart() {
                             </li>
                         ))}
                     </ul>
-                    <h1>Subtotal: ${totalPrice}</h1>
+                    <h1>Subtotal: ${total_price}</h1>
                     <button onClick={() => setIsCheckingOut(true)}>Checkout</button>
                     {isCheckingOut && (
                         <>

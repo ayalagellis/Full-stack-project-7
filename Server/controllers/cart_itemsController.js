@@ -20,11 +20,9 @@ export const getCartItemsOfCart1 = async (req, res) => {
 
 
 export const createCartItem1 = async (req, res) => {
-    console.log(req.body);
 
    // const { cart_id, product_id, quantity, price } = req.body;
-    const cart_id = req.body.cartId;
-    console.log(cart_id);
+    const cart_id = req.body.cart_id;
 
 const product_id = req.body.productId;
 const quantity1 = req.body.quantity;
@@ -32,7 +30,6 @@ const price = req.body.productPrice;
 
     const cartItem = await createCartItem(cart_id, product_id, quantity1, price);
     let new_price = quantity1 * price;
-    console.log(new_price)
    // await updateCart(cart_id, new_price);
     await updateCart(cart_id, { total_price: new_price });
     res.send(cartItem);

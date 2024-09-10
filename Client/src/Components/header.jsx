@@ -4,7 +4,6 @@ import userImg from '../assets/user.png';
 import cartImg from '../assets/grocery-store.png'; 
 import homeImage from '../assets/home.png'; 
 import logoutImage from '../assets/logout.png'; 
-import { useUser } from './UserContext'; 
 
 import "../CSS/header.css"; 
 
@@ -15,7 +14,6 @@ function Header() {
 const [menuOpen, setMenuOpen] = useState(false);
 const menuRef = useRef(null);  // Reference to the menu
 const navigate = useNavigate();
-const { user, setUser } = useUser();
 
 
 
@@ -41,14 +39,16 @@ useEffect(() => {
   };
 }, [menuOpen]);
 
-function eraseCookie(name) {
-  document.cookie = name + '=; Max-Age=-99999999;';
-}
 
-  const logout = () => {
-  setUser({ id: null, username: null, is_manager: null, cartData: {id: null, customer_id: null, total_price: null} });
-  eraseCookie('name');
-  eraseCookie('pw');
+  const logout = async() => {
+    const logout = await fetch('http://localhost:3000/users/logout', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      
+      credentials: 'include'
+  });
   alert("You have been successfully logged out!");
   navigate('/'); 
 };
@@ -65,6 +65,15 @@ function eraseCookie(name) {
         <Link className="L1" to="/" onClick={logout}>
           <img src= {logoutImage} alt="logout" />
         </Link>
+        <Link to="/login">
+          <img src={userImg} alt="Go to Login" />
+        </Link>
+
+        <Link to="/cart">
+          <img src= {cartImg} alt="Go to Cart" />
+        </Link>
+
+
 
         {menuOpen && (
           <nav className="menu">
@@ -80,14 +89,6 @@ function eraseCookie(name) {
           </nav>
         )}
         <h1 className="heading">Your Cosmetics</h1>
-        <Link to="/login">
-          <img src={userImg} alt="Go to Login" />
-        </Link>
-
-        <Link to="/cart">
-          <img src= {cartImg} alt="Go to Cart" />
-        </Link>
-
 
 
       </header>

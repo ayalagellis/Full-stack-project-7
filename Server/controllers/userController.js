@@ -1,7 +1,20 @@
 
-import {getAllUsers,getUserByUsername, getUser, createUser, updateUser, deleteUser} from '../models/users.js'
+import {getAllUsers,getUserByUsername, getUser, createUser, updateUser, deleteUser, is_manager} from '../models/users.js'
+import { getCartByCustomerId, createCart } from '../models/cart.js';
 import { verifyPassword, generateToken, hashPassword } from '../helper.js';
 
+
+
+export const isManager = async(req, res, next) => {
+    // Assuming you have user information in req.user (after authentication)
+    const manager = await is_manager()
+
+    if (manager === 1) {
+        next(); // User is a manager, proceed to the next middleware or route handler
+    } else {
+        res.status(403).send('Access Denied'); // Forbidden
+    }
+};
 
 export const getAllUsers1 = async(req,res)=>{
     const users = await getAllUsers()
@@ -40,7 +53,7 @@ export const updateUser1 = async (req, res) => {
 
   // Logout endpoint
 export const logout = async (req, res) => {
-    //res.clearCookie('User');
+    res.clearCookie('user-data', { expires: new Date()});
     res.send('Logged out');
 };
 
@@ -52,30 +65,47 @@ export const login =  async (req, res) => {
     const { username, user_password } = req.body;
     try {
         const user = await getUserByUsername(username);
-        console.log(user)
         if (!user) {
             return res.status(401).send('User not found');
         }
 
-        //const validPassword = await verifyPassword(user_password, user.user_password);
-        //console.log(validPassword)
+    //     const validPassword = await verifyPassword(user_password, user.user_password);
         
-        //if (!validPassword) {
-       //     return res.status(401).send('Invalid password');
-       // }
+    //     if (!validPassword) {
+    //        return res.status(401).send('Invalid password');
+    //    }
 
-        //const token = generateToken(user.id);
+        const existingCart = await getCartByCustomerId(user.id);
 
-        //res.cookie('User', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
-        res.json(
-            {
-                id: user.id,
-                username: user.username
-            }
-            
-        );
+        let cart = null;
+        if (existingCart) {
+            cart = existingCart  
+        }
+        else{
+            cart = await createCart(user.id, 0);
+        }
 
 
+        
+        res.cookie('user-data', JSON.stringify({
+            customer_id: user.id,
+            username: user.username,
+            password: user.user_password,
+            manager: user.is_manager,
+            cart_id: cart.id,
+            total_price: cart.total_price
+
+        }), {
+            maxAge: 36000000, // Duration in milliseconds
+            httpOnly: false,
+        });
+        
+        res.json({
+            id: user.id,
+            username: user.username,
+            is_manager: user.is_manager
+        });
+        
     } catch (error) {
         res.status(500).send('Server error');
     }

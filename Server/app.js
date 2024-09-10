@@ -11,15 +11,16 @@ import discountsRoute from './routes/discountsRoute.js';
 
 
 const app = express()
-// app.use(cors({
-//   origin: 'http://localhost:3000', 
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//   credentials: true
-// }));
-app.use(cors()); // Allow requests from any origin
+app.use(cors({
+  origin: 'http://localhost:5173', // Replace with your frontend URL
+  //methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true // Allow cookies to be sent with requests
+}));
+
+//app.use(cors()); // Allow requests from any origin
+app.use(cookieParser());
 
 app.use(express.json());
-app.use(cookieParser());
 
 
 //Routes

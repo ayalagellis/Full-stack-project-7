@@ -16,9 +16,15 @@ export async function verifyPassword(password, hash) {
 }
 
 // Generate a JWT token
-export function generateToken(userId) {
-    return jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '24h' });
+// export function generateToken(userId) {
+//     return jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '24h' });
+// }
+
+export function generateToken(user) {
+    const { username, user_password, is_manager } = user;
+    return jwt.sign({ username, user_password, is_manager }, JWT_SECRET, { expiresIn: '24h' });
 }
+
 
 // Verify a JWT token
 export function verifyToken(token) {

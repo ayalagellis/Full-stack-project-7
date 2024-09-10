@@ -37,9 +37,21 @@ export const createCart1 = async (req, res) => {
      }
      else{
     const cart = await createCart(customer_id, 0);
-    res.send(cart);
+
+    res.cookie('cart', JSON.stringify({
+        cart_id: cart.id,
+        total_price: cart.total_price
+    }), {
+        maxAge: 3600000, // 1 hour
+        httpOnly: false,
+    });
+
+    
+
+    res.json(cart);
      }
 };
+
 
 
 export const updateCart1 = async (req, res) => {
@@ -74,14 +86,14 @@ export const processCart = async (req, res) => {
     const connection = await pool.getConnection();
 
     try {
-        const { cartId, shippingAddress } = req.body;
+        const { cart_id, shippingAddress } = req.body;
 
-        const cart = await getCart(cartId);
+        const cart = await getCart(cart_id);
         if (!cart) {
             throw new Error('Cart not found');
         }
 
-        const cartItems = await getCartItemsOfCart(cartId);
+        const cartItems = await getCartItemsOfCart(cart_id);
 
         if (cartItems.length === 0) {
             throw new Error('No items in the cart');
@@ -121,7 +133,7 @@ export const processCart = async (req, res) => {
         }
 
         // Delete the cart
-        await deleteCart(cartId);
+        await deleteCart(cart_id);
 
         await connection.commit();
         res.json({ success: true, orderId: order.insertId });

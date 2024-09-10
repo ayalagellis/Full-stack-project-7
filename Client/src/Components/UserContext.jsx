@@ -1,18 +1,13 @@
 import React, { createContext, useState, useContext } from 'react';
 
-// Create a context for user
-const UserContext = createContext();
-
-// Create a provider component
-export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-
-    return (
-        <UserContext.Provider value={{ user, setUser }}>
-            {children}
-        </UserContext.Provider>
-    );
-};
-
-// Custom hook to use the UserContext
-export const useUser = () => useContext(UserContext);
+  export  function getCookie(name) {
+        var nameEQ = name + "=";
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            while (cookie.charAt(0) == ' ') cookie = cookie.substring(1, cookie.length);
+            if (cookie.indexOf(nameEQ) == 0) return cookie.substring(nameEQ.length, cookie.length);
+        }
+        return null;
+    }
+        

@@ -1,25 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'; 
-import { useUser } from './UserContext'; 
 import Header from "./header";
+import { getCookie } from "./UserContext";
+const userDataCookie = getCookie('user-data');
+const decodedCookie = decodeURIComponent(userDataCookie);      
+const userData = JSON.parse(decodedCookie);        
+const customer_id = userData.customer_id;
+const username = userData.username;
+const manager = userData.manager;
+const cart_id = userData.cart_id;
+const total_price = userData.total_price;
+
 
 import "../CSS/orders.css"; // Add any required CSS
 
 function Orders() {
     const [orders, setOrders] = useState([]);
-    const { user } = useUser();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user){
+        if (username){
             fetchOrders();
         }
-    }, [user, navigate]);
+    }, [username, navigate]);
 
     const fetchOrders = async () => {
         try {
             const baseUrl = 'http://localhost:3000/orders';
-            const url = user.is_manager
+            const url = manager
                 ? baseUrl
                 : `${baseUrl}?customer_id=${user.id}`; // Fetch only user-specific orders if not a manager
 
@@ -38,7 +46,7 @@ function Orders() {
         <>
             <Header />
             <div className="order-list">
-                {!user ? (
+                {!username ? (
                     <p>You must be logged in to view orders.</p>
                 ) : (
                     orders.length > 0 ? (

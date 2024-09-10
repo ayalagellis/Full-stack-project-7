@@ -1,26 +1,17 @@
 import React, { useState } from 'react';
-import { useUser } from './UserContext';
 import { useNavigate } from 'react-router-dom'; 
 import Header from "./header";
+import {getCookie} from "./UserContext"
+
 import "../CSS/Login.css"; 
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [user_password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const { user, setUser } = useUser(); // Get the setUser function from context
     const navigate = useNavigate();
 
-    function getCookie(name) {
-        var nameEQ = name + "=";
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i];
-            while (cookie.charAt(0) == ' ') cookie = cookie.substring(1, cookie.length);
-            if (cookie.indexOf(nameEQ) == 0) return cookie.substring(nameEQ.length, cookie.length);
-        }
-        return null;
-    }
+
     
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -35,44 +26,17 @@ const Login = () => {
                     username,
                     user_password,
                 }),
+                credentials: 'include'
             });
 
 
             if (response.ok) {
-                // Handle successful login
+            const userDataCookie = getCookie('user-data');
+            const decodedCookie = decodeURIComponent(userDataCookie);      
+            const userData = JSON.parse(decodedCookie);        
+            const { customer_id, username, manager } = userData;
 
-                const loginData = await response.json();
-                const { id, username, is_manager } = loginData; 
-                console.log(is_manager)
-
-
-                const customer_id = id;
-
-                const cartResponse = await fetch('http://localhost:3000/cart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        customer_id
-                    }),
-                });
-
-                if (!cartResponse.ok) {
-                    throw new Error('Failed to create cart');
-                }
-
-               const cartData = await cartResponse.json();
-              // Store user details in context
-
-                 setUser({ id, username, is_manager, cartData });
-                 console.log(user)
-
-                 var storedNameCookie = getCookie('name');
-                 var storedPwCookie = getCookie('pw');
-
-
-
+                    
                 alert('Login successful');
 
                 navigate('/');
