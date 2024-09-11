@@ -14,16 +14,23 @@ function Products() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const [currentProduct, setCurrentProduct] = useState(null);
-    const userDataCookie = getCookie('user-data');
-    const decodedCookie = decodeURIComponent(userDataCookie);      
-    const userData = JSON.parse(decodedCookie);        
-    const customer_id = userData.customer_id;
-    const username = userData.username;
-    const manager = userData.manager;
-    const cart_id = userData.cart_id;
-    const total_price = userData.total_price;
 
-    const audioRef = useRef(null); // Create a reference for the audio element
+    // Initialize user data with default values
+    const userDataCookie = getCookie('user-data');
+    let userData = { customer_id: null, username: null, manager: 0, cart_id: null, total_price: '0' };
+    
+    if (userDataCookie) {
+        try {
+            const decodedCookie = decodeURIComponent(userDataCookie);
+            userData = JSON.parse(decodedCookie);
+        } catch (error) {
+            console.error('Failed to parse user data from cookie:', error);
+        }
+    }
+
+    const { customer_id, username, manager, cart_id, total_price } = userData;
+    
+    const audioRef = useRef(null);
 
     useEffect(() => {
         fetchProducts();
@@ -54,6 +61,7 @@ function Products() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(productData),
+                credentials: 'include'
             });
 
             if (response.ok) {
@@ -72,6 +80,7 @@ function Products() {
         try {
             const response = await fetch(`http://localhost:3000/products/${productId}`, {
                 method: 'DELETE',
+                credentials: 'include'
             });
 
             if (response.ok) {
@@ -94,6 +103,7 @@ function Products() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(productData),
+                credentials: 'include'
             });
 
             if (response.ok) {
@@ -114,14 +124,14 @@ function Products() {
             alert('You must be logged in to add items to your cart.');
             return;
         }
-        const quantity = selectedQuantities[product.id] || 1; // Default to 1 if no quantity is selected
+        const quantity = selectedQuantities[product.id] || 1;
         if (product.quantity < quantity) {
             alert('Selected amount is too much.');
             return;
         }
         try {
             const productId  = product['id'];
-            const productPrice = parseFloat(product.price); // Converting price from string to number
+            const productPrice = parseFloat(product.price); 
 
             const response = await fetch('http://localhost:3000/cart-items', {
                 method: 'POST',
@@ -138,13 +148,13 @@ function Products() {
 
             if (response.ok) {
                 let priceChange = productPrice * quantity;
-                let totalPrice = parseFloat(total_price) || 0; 
+                let updatedTotalPrice = parseFloat(total_price) + priceChange;
 
-                let updatedTotalPrice =  totalPrice + priceChange;
                 document.cookie = `user-data=${encodeURIComponent(JSON.stringify({
                     ...userData,
-                    total_price: updatedTotalPrice // Ensure price is in the correct format
+                    total_price: updatedTotalPrice
                 }))}; path=/`;
+                
                 try {
                     await audioRef.current.play();
                 } catch (error) {
@@ -202,10 +212,10 @@ function Products() {
 
                             {manager !== 0 && (
                                 <>
-                                    <button onClick={() => { setCurrentProduct(product); setIsUpdateModalOpen(true); }}>
+                                    <button onClick={() => { setCurrentProduct(product); setIsUpdateModalOpen(true); }} >
                                         Update Item
                                     </button>
-                                    <button onClick={() => handleDeleteProduct(product.id)}>
+                                    <button onClick={() => handleDeleteProduct(product.id)} >
                                         Delete Item
                                     </button>
                                 </>
@@ -213,7 +223,7 @@ function Products() {
                         </div>
                     ))}
                 </div>
-<br></br>
+                <br />
                 {manager !== 0 && (
                     <button onClick={() => setIsModalOpen(true)}>Add Product</button>
                 )}

@@ -15,14 +15,20 @@ function Cart() {
     const [creditCardNumber, setCreditCardNumber] = useState('');
     const [creditCardExpiry, setCreditCardExpiry] = useState('');
     const [creditCardCVC, setCreditCardCVC] = useState('');
+
     const userDataCookie = getCookie('user-data');
-    const decodedCookie = decodeURIComponent(userDataCookie);      
-    const userData = JSON.parse(decodedCookie);        
-    const customer_id = userData.customer_id;
-    const username = userData.username;
-    const manager = userData.manager;
-    const cart_id = userData.cart_id;
-    const total_price = userData.total_price;
+    let userData = { customer_id: null, username: null, manager: 0, cart_id: null, total_price: '0' };
+    if (userDataCookie) {
+        try {
+            const decodedCookie = decodeURIComponent(userDataCookie);
+            userData = JSON.parse(decodedCookie);
+        } catch (error) {
+            console.error('Failed to parse user data from cookie:', error);
+        }
+    }
+
+    const { customer_id, username, manager, cart_id, total_price } = userData;
+    
 
     const navigate = useNavigate(); 
 

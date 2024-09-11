@@ -5,14 +5,29 @@ import { verifyPassword, generateToken, hashPassword } from '../helper.js';
 
 
 
-export const isManager = async(req, res, next) => {
-    // Assuming you have user information in req.user (after authentication)
-    const manager = await is_manager()
+export const isManager = async (req, res, next) => {
+    const userDataCookie = req.cookies['user-data'];
+    
+    if (!userDataCookie) {
+        return res.status(401).send('Unauthorized'); // No user data in cookies
+    }
 
-    if (manager === 1) {
-        next(); // User is a manager, proceed to the next middleware or route handler
-    } else {
-        res.status(403).send('Access Denied'); // Forbidden
+    try {
+        const decodedCookie = decodeURIComponent(userDataCookie);
+        const userData = JSON.parse(decodedCookie);
+        const userId = userData.customer_id;
+
+        const manager = await is_manager(userId);
+        let isManager = manager.is_manager;
+        //console.log(isManager)
+        if (isManager === 1) {
+            next(); // User is a manager, proceed to the next middleware or route handler
+        } else {
+            res.status(403).send('Access Denied'); // Forbidden
+        }
+    } catch (error) {
+        console.error('Error verifying manager status:', error);
+        res.status(500).send('Server Error');
     }
 };
 
