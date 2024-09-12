@@ -1,162 +1,124 @@
+/* Header container styles */
 .topnav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
-  background-color: #f1f1f1;
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  position: relative;
+  border-bottom: 1px solid #ddd;
 }
 
-.menu-toggle {
+/* Heading style */
+.heading {
   font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  flex-grow: 1;
+  text-align: center;
+  flex: 1;
+}
+
+/* Menu toggle button (hamburger icon) */
+.menu-toggle {
+  display: none; /* Hide on large screens */
   background: none;
   border: none;
+  font-size: 24px;
+  cursor: pointer;
 }
 
+/* Navigation links */
+.L1 {
+  text-decoration: none;
+}
+
+/* Navigation images */
+.topnav img {
+  height: 24px;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Menu styles */
 .menu {
-  display:block; 
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 60px;
-  left: 0;
-  background: rgba(0, 0, 0, 0.8);
-  width: 100%;
-  text-align: center;
+  right: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .menu ul {
   list-style-type: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
-.menu li {
-  margin: 10px 0;
+.menu ul li {
+  border-bottom: 1px solid #ddd;
 }
 
-.heading {
-  font-size: 2rem; 
-  text-align: center;
-  flex-grow: 1;
-  
+.menu ul li a {
+  display: block;
+  padding: 10px 20px;
+  color: #333;
+  text-decoration: none;
 }
 
-.topnav > a {
-  margin-right: 10px; /* Ensure spacing between icons */
-  color: black;
+.menu ul li a:hover {
+  background-color: #f0f0f0;
 }
 
-.topnav > button {
-  margin-right: 0px; /* Ensure spacing between icons */
-  color: black;
-}
-
-.topnav .user-cart-icons img {
-  height: 28px; 
-  width: 28px;
-}
-
-.user-cart-icons {
-  display: flex;
-  align-items: center;
-}
-
-
-
-  /* Responsive Styles */
-@media screen and (max-width: 768px) {
-
-  .topnav { 
-    align-items: center;
-    justify-content: space-between;
-    padding:10px;
-    width:100%;
-  }
-  .L1{
-    display: none;
-  }
-  
-  .menu-toggle {
-    font-size: 200% !important
-  }
-  
-  .menu {
-    top: 4.079rem!important; 
-    width: 100% !important;
-
-  }
-  .menu li {
-    margin: 4vw 0!important;
-  }
-  
-  .heading {
-    font-size: 4vw!important; 
-    text-align: center;
-    flex-grow: 1;
-    
-  }
-  
-  .topnav > a {
-    margin-right: 10px; /* Ensure spacing between icons */
-    color: rgb(140, 50, 60)!important;
-    font-size: 33vw!important;
-    font-weight:900!important;
-  }
-  
-  .topnav .user-cart-icons img {
-    height: auto; /* Reduce the size of Login and Cart icons */
-    width: 4vw;
-  }
-  
-}
-
-
-
-
-@media screen and (min-width: 769px) and (max-width: 1125px) {
+/* Responsive styles */
+@media (max-width: 768px) {
   .topnav {
-    align-items: center;
-    justify-content: space-between;
-    padding:10px;
-    width: 100%;
-   
+    flex-direction: column;
+    align-items: flex-start;
   }
-  .L1{
-    display: none;
-  }
-  
+
   .menu-toggle {
-    font-size: 200% !important
+    display: block; /* Show on mobile screens */
   }
-  
+
+  .heading {
+    font-size: 20px;
+    margin: 0;
+    margin-right: 150px;
+  }
+
   .menu {
-    top: 4.079rem!important; /* Position below the header */
-    width: 100% !important;
+    top: 50px; /* Adjust for smaller screens */
+    right: 10px;
+  }
+
+  .topnav img {
+    height: 20px;
 
   }
-  .menu li {
-    margin: 4vw 0!important;
+
+  .menu ul li a {
+    padding: 10px;
+    font-size: 14px;
   }
-  
-  .heading {
-    font-size: 4vw!important; /* Increase the size of the heading */
-    text-align: center;
-    flex-grow: 1;
-    
-  }
-  
-  .topnav > a {
-    margin-right: 10px; /* Ensure spacing between icons */
-    color: rgb(140, 50, 60)!important;
-    font-size: 33vw!important;
-    font-weight:900!important;
-  }
-  
-  .topnav .user-cart-icons img {
-    height: auto; 
-    width: 4vw;
-    
-  }
-  
 }
 
+@media (min-width: 769px) {
+  .topnav {
+    flex-direction: row;
+    align-items: center;
+  }
 
+  .menu {
+    display: none; /* Hide menu on larger screens */
+  }
 
+  .menu-toggle {
+    display: none;
+  }
+}

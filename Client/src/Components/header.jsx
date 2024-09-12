@@ -40,7 +40,7 @@ useEffect(() => {
 }, [menuOpen]);
 
 
-  const logout = async() => {
+   const logout = async() => {
     const logout = await fetch('http://localhost:3000/users/logout', {
       method: 'POST',
       headers: {
