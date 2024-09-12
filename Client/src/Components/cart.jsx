@@ -80,7 +80,22 @@ function Cart() {
 
                 const result = await response.json();
                 const { orderId } = result; // Assuming the response contains the new order ID
+
+                document.cookie = `user-data=${encodeURIComponent(JSON.stringify({
+                    ...userData,
+                    total_price: 0.0
+                }))}; path=/`;
+
                 navigate(`/thank-you?orderId=${orderId}`); // Pass orderId as a query parameter
+                const logout = await fetch('http://localhost:3000/users/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    
+                    credentials: 'include'
+                });
+              
             } else {
                 console.error('Submission failed');
             }
@@ -103,6 +118,13 @@ function Cart() {
                 let priceChange = productPrice * quantity;
                // let totalPrice = parseFloat(user.cartData.total_price) || 0; 
                 //let updatedCartData = { ...user.cartData, total_price: totalPrice - priceChange };
+                let updatedTotalPrice = parseFloat(total_price) - priceChange;
+
+                document.cookie = `user-data=${encodeURIComponent(JSON.stringify({
+                    ...userData,
+                    total_price: updatedTotalPrice
+                }))}; path=/`;
+
  
             } else {
                 console.error('Failed to delete item');

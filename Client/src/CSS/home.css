@@ -10,16 +10,16 @@
   }
   
   .topnav {
-    position: fixed; /* Fix the nav bar to the top */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 10px 20px; /* Adjust padding as needed */
+    padding: 10px 20px; 
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: rgba(215, 206, 206, 0.8);
-    z-index: 1000; /* Ensure it's on top of other elements */
+    z-index: 1000; 
   }
   
   .menu-toggle {
@@ -27,14 +27,14 @@
     border: none;
     font-size: 30px;
     color: #fff;
-    display: block; /* Show menu toggle by default */
+    display: block; 
   }
   
   .menu {
     margin-top: 26px;
-    display:block; /* Hide menu by default */
+    display:block; 
     position: absolute;
-    top: 60px; /* Position below the header */
+    top: 60px; 
     left: 0;
     background: rgba(215, 206, 206, 0.8);
     width: 100%;
@@ -42,7 +42,7 @@
   }
   
   .menu.show {
-    display: block; /* Show menu when open */
+    display: block; 
   }
   
   .menu ul {
@@ -95,21 +95,17 @@
     z-index: 0; /* Ensure background is behind the nav */
   }
   
-  /* Responsive Styles */
-
-  
-  
   .video-container {
     display: flex;
-    width: 100vw; /* רוחב של 100% מהחלון הנראה */
-    height: 70vh; /* גובה של 100% מהחלון הנראה */
+    width: 100vw; 
+    height: 70vh;
   }
   
   video {
-    flex: 1; /* כל סרטון יתפוס חלק שווה מהאזור */
-    width: 33.33%; /* כל סרטון יתפוס שליש מהרוחב */
-    height:outo; /* סרטון יתפוס את כל גובה התיבה */
-    object-fit: cover; /* שמירה על יחס ההיבט עם חיתוך */
+    flex: 1; 
+    width: 33.33%; 
+    height:outo; 
+    object-fit: cover; 
     height: 100vh; 
 
   }
@@ -141,31 +137,31 @@
 
 .image-buttons-container {
   display: flex;
-  justify-content:space-around; /* רווחים שווים בין התמונות */
-  align-items: center; /* מרכז את התמונות אנכית בתוך ה-container */
-  padding: 50px 15px; /* הוסף ריפוד מסביב ל-container */
+  justify-content:space-around; 
+  align-items: center; 
+  padding: 50px 15px; 
   background: rgba(237, 235, 235, 0.8);
  margin-top: 30px;
  
 }
 
 .image-button {
-  border: none; /* אין מסגרת סביב הכפתור */
-  background: none; /* אין רקע לכפתור */
-  cursor: pointer; /* הופך את הסמן ליד של לחיצה */
-  padding: 0; /* מבטל ריפוד בכפתור */
-  margin: 30px 10px; /* רווח קטן יותר בין הכפתורים */
-  transition: transform 0.3s ease; /* מוסיף מעבר חלק */
+  border: none; 
+  background: none; 
+  cursor: pointer;
+  padding: 0; 
+  margin: 30px 10px; 
+  transition: transform 0.3s ease; 
 }
 
 .image-button img {
-  width: 350px; /* קובע את הרוחב של התמונות */
-  height: auto; /* שומר על יחס ההיבט של התמונה */
+  width: 350px;
+  height: auto; 
 
 }
 
 .image-button:hover {
-  transform: scale(1.1); /* מגדיל את הכפתור ב-10% כאשר מרחפים מעליו */
+  transform: scale(1.1); 
 }
 
 .imageH{
@@ -179,7 +175,7 @@
   text-align: center;
   padding: 20px;
   background-color: #ffffff;
-  direction: ltr; /* Left-to-right text direction */
+  direction: ltr; 
   margin-top: 100px
 }
 
@@ -227,21 +223,21 @@
 
 .whatsapp-button {
   position: fixed;
-  bottom: 40px; /* המרחק מלמטה */
-  right: 20px; /* המרחק מימין */
-  z-index: 1000; /* לוודא שהאייקון מעל לתוכן אחר */
+  bottom: 40px; 
+  right: 20px; 
+  z-index: 1000; 
   margin-right:-10px;
 }
 
 .whatsapp-button img {
-  width: 50px; /* רוחב התמונה */
-  height: 50px; /* גובה התמונה */
-  transition: border 0.3s ease; /* מעבר חלק */
+  width: 50px; 
+  height: 50px; 
+  transition: border 0.3s ease; 
 }
-/* אפקט ריחוף */
+
 .whatsapp-button:hover img {
-  border: 2px solid black; /* מסגרת שחורה */
-  border-radius: 50%; /* מסגרת עגולה אם צריך */
+  border: 2px solid black; 
+  border-radius: 50%; 
 }
 
 .contact-address-container {
@@ -249,7 +245,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin: 0 auto; /* מרכז את התוכן */
+  margin: 0 auto; 
   padding: 20px;
   margin-top: 100px;
   background-color:rgba(231, 224, 224, 0.87);
@@ -258,11 +254,11 @@
 }
 
 .contact-section, .address-section {
-  width: 45%; /* חלוקה שווה בין שני החלקים */
+  width: 45%; 
   text-align: center;
 }
 .contact-section, .address-section  {
-  width: 45%; /* חלוקה שווה בין שני החלקים */
+  width: 45%;
   text-align: center;
 }
 
@@ -275,8 +271,8 @@
 
 .Hf{
   margin-bottom: 16px;
-  color: #000000;
- text-align: center;
+  color: #000000; 
+ text-align: center; 
  font-weight:bold;
   letter-spacing: 2px;
   font-size: 20px;
@@ -285,22 +281,21 @@
 
 
 /* Responsive Styles */
-/* Responsive Styles */
 @media screen and (max-width: 768px) {
   .video-container {
-    display: flex; /* השתמש בפלקס כדי לשלוט בהצגת הסרטונים */
-    flex-direction: column; /* סרטונים יהיו בעמודה אחת */
+    display: flex;
+    flex-direction: column; 
     margin-bottom:2rem;
   }
 
   video {
-    display: none; /* הסתר את כל הסרטונים ברירת מחדל */
+    display: none; 
   }
 
   video:first-of-type {
-    display: block; /* הצג רק את הסרטון הראשון */
-    width: 100%; /* רוחב הסרטון לכל רוחב המסך */
-    height: 145%; /* גובה בהתאם לרוחב */
+    display: block; 
+    width: 100%; 
+    height: 145%; 
   }
 
 
@@ -330,19 +325,19 @@
 
  
   .image-button {
-    width: 100%; /* תופס 80% מרוחב ה-container */
-    max-width: 50vw; /* מקסימום רוחב עבור הכפתור */
+    width: 100%; 
+    max-width: 50vw;
     
   }
   .image-buttons-container {
-    flex-direction: column; /* הכפתורים יהיו אחד מתחת לשני */
-    align-items: stretch; /* הכפתורים יתפוס את כל הרוחב */
+    flex-direction: column; 
+    align-items: stretch; 
     align-items: center;
   }
   .image-button img {
-    width: 100%; /* רוחב התמונה לכל רוחב הכפתור */
-    max-width: 100%; /* התמונה לא תצא מעבר לרוחב הכפתור */
-    height: auto; /* שומר על יחס ההיבט של התמונה */
+    width: 100%; 
+    max-width: 100%; 
+    height: auto;
   }
   
 
@@ -396,30 +391,30 @@
   }
 
 
-  .whatsapp-button {
-    bottom: 4rem; /* המרחק מלמטה */
-    right: 7vw; /* המרחק מימין */
+  .whatsapp-button{
+    bottom: 40px;
+    right: 20px; 
+}
    
-  }
+  
   
   .whatsapp-button img {
-    width: 9vw; /* רוחב התמונה */
-    height: 3rem; /* גובה התמונה */
-  
+    width: 40px; 
+    height: 40px; 
   }
 
   .contact-address-container {
     align-items: center;
-    flex-direction: column; /* הכתובת ופרטי הקשר יהיו אחד מתחת לשני */
+    flex-direction: column; 
     padding:4rem 20vw;
     margin-top: 4rem; 
   }
   
   .contact-section, .address-section {
-    width: 45%; /* חלוקה שווה בין שני החלקים */
+    width: 45%; 
     text-align: center;
-    width: 100%; /* תופס את כל רוחב המסך */
-    margin-bottom: 4rem; /* מרווח בין שני החלקים */
+    width: 100%;
+    margin-bottom: 4rem; 
   }
   
   .Pf{
@@ -433,28 +428,18 @@
     letter-spacing: 0.5vw;
     font-size: 3vw;
   }
-  
 
- 
 }
-
-
-
-
-
-
-
-
 
 
 @media screen and (min-width: 769px) and (max-width: 1125px) {
 
   .video-container{
-    width:145%;
+    width:100%;
   }
 
   #DivJUST{
-    width:145%;
+    width:100%;
     padding-bottom:0.3rem;
     margin-bottom:9rem;
    
@@ -480,19 +465,19 @@
 
 
    .image-button {
-    width:90%; /* תופס 80% מרוחב ה-container */
-    max-width: 50vw; /* מקסימום רוחב עבור הכפתור */
+    width:90%;
+    max-width: 50vw;
     
   }
   .image-buttons-container {
-    align-items: stretch; /* הכפתורים יתפוס את כל הרוחב */
+    align-items: stretch; 
     align-items: center;
-    width: 145%;
+    width: 100%;
   }
   .image-button img {
-    width: 100%; /* רוחב התמונה לכל רוחב הכפתור */
-    max-width: 100%; /* התמונה לא תצא מעבר לרוחב הכפתור */
-    height: auto; /* שומר על יחס ההיבט של התמונה */
+    width: 100%; 
+    max-width: 100%;
+    height: auto;
   }
 
 
@@ -503,9 +488,9 @@
     padding-top: 1rem;
     padding-bottom: 1rem;
     background-color: #ffffff;
-    direction: ltr; /* Left-to-right text direction */
+    direction: ltr;
     margin-top: 5rem;
-    width: 145%;
+    width: 100%;
   }
   
   .footer-container h2 {
@@ -547,29 +532,28 @@
 
 
   .whatsapp-button {
-    bottom: 4rem; /* המרחק מלמטה */
-    
-   
+    bottom:40px; 
+    right: 20px; 
   }
   
   .whatsapp-button img {
-    width: 10vw; /* רוחב התמונה */
-    height:auto; /* גובה התמונה */
+    width:50px; 
+    height:50px; 
   
   }
 
   .contact-address-container {
-    align-items: center;
+    align-items:center;
     padding:4rem 20vw;
     margin-top: 4rem; 
-    width: 145%;
+    width: 100%;
   }
   
   .contact-section, .address-section {
-    width: 45%; /* חלוקה שווה בין שני החלקים */
+    width: 45%; 
     text-align: center;
-    width: 100%; /* תופס את כל רוחב המסך */
-    margin-bottom: 4rem; /* מרווח בין שני החלקים */
+    width: 100%; 
+    margin-bottom: 4rem; 
   }
   
   .Pf{

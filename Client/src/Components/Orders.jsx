@@ -27,17 +27,16 @@ function Orders() {
             // const url = manager===1
             //     ? baseUrl
             //     : `${baseUrl}?customer_id=${user.id}`; // Fetch only user-specific orders if not a manager
-            let url = 0;
+            let response = 0;
                 if(manager === 1)
                 {
-                    url = `http://localhost:3000/orders`;
+                    response = await fetch(`http://localhost:3000/orders`);
                     
                 }
                 else{
-                    url = `http://localhost:3000/orders`;
+                    response = await fetch(`http://localhost:3000/orders?customer_id=${customer_id}`);
                 }
 
-            const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Network response was not ok.');
             }
@@ -52,7 +51,7 @@ function Orders() {
         <>
             <Header />
             <div className="order-list">
-                {!userData.username ? (
+                {!username ? (
                     <p>You must be logged in to view orders.</p>
                 ) : (
                     orders.length > 0 ? (
