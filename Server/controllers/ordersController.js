@@ -3,7 +3,6 @@ import { getAllOrders, getOrder, createOrder, updateOrder, deleteOrder } from '.
 export const getAllOrders1 = async (req, res) => {
     const filters = req.query;
     const orders = await getAllOrders(filters);
-    console.log(orders)
     res.send(orders);
 };
 

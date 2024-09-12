@@ -6,7 +6,7 @@ import {isManager} from '../controllers/userController.js'
 const router = express.Router();
 
 // Define routes
-router.get('/', isManager, getAllOrders1); // Get all orders
+router.get('/', getAllOrders1); // Get all orders
 router.get('/:id', getOrder1); // Get order by ID
 router.post('/', createOrder1); // Create a new order
 router.put('/:id', isManager, updateOrder1); // Update order

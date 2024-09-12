@@ -2,16 +2,26 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'; 
 import Header from "./header";
 import { getCookie } from "./UserContext";
-const userDataCookie = getCookie('user-data');
-let userData = { customer_id: null, username: null, manager: 0, cart_id: null, total_price: '0' };
+import "../CSS/orders.css";
 
-
-
-import "../CSS/orders.css"; // Add any required CSS
 
 function Orders() {
     const [orders, setOrders] = useState([]);
     const navigate = useNavigate();
+    const userDataCookie = getCookie('user-data');
+    let userData = { customer_id: null, username: null, manager: 0, cart_id: null, total_price: '0' };
+    if (userDataCookie) {
+        try {
+            const decodedCookie = decodeURIComponent(userDataCookie);
+            userData = JSON.parse(decodedCookie);
+        } catch (error) {
+            console.error('Failed to parse user data from cookie:', error);
+        }
+    }
+
+    const { customer_id, username, manager, cart_id, total_price } = userData;
+
+
 
     useEffect(() => {
         if (userData.username){
@@ -41,6 +51,7 @@ function Orders() {
                 throw new Error('Network response was not ok.');
             }
             const ordersData = await response.json();
+            console.log(ordersData)
             setOrders(ordersData);
         } catch (error) {
             console.error('Failed to fetch orders:', error);
