@@ -24,35 +24,33 @@ Welcome to the **Cosmetics Store** project! This is a full-stack web application
 
 1. Clone the repository:
    ```bash
-   https://github.com/reutZi/Kindergarten_FullStack_Project.git
+   https://github.com/ayalagellis/Full-stack-project-7.git
 
-2. Navigate to the project directory:
-   ```bash
-   cd kindergarten-management-system
-
-3. Install frontend dependencies:
+2. Install frontend dependencies:
     ```bash
-    cd frontend
+    cd Client
     npm install
 
-4. Install backend dependencies:
+3. Install backend dependencies:
     ```bash
-    cd ../backend
+    cd Server
     npm install
-
-5. Configure environment variables:
-Create a .env file in the backend directory with your MySQL, MongoDB, and notification service credentials.
 
 ### Usage
 
 1. Start the backend server:
    ```bash
-   cd backend
-   node server.js
+   cd Server
+   npm run dev
 
 2. Start the frontend development server:
    ```bash
-   cd frontend
-   npm start
+   cd Client
+   npm run dev
 
-3. Access the application in your browser at http://localhost:3000.
+3. The address to access the application will be displayed in your terminal once you run the application. Look for a line like:
+Local: http://localhost:5173/ (the port may vary).
+
+
+
+
