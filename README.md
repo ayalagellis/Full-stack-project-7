@@ -20,49 +20,39 @@ Welcome to the **Cosmetics Store** project! This is a full-stack web application
 - **MySQL** (for storing products, user data, orders, etc.)
 - **JWT** (for user authentication)
 
-## Installation
+### Installation
 
-#### 1. Clone the Repository
+1. Clone the repository:
+   ```bash
+   https://github.com/reutZi/Kindergarten_FullStack_Project.git
 
-Clone this repository to your local machine using the following command:
+2. Navigate to the project directory:
+   ```bash
+   cd kindergarten-management-system
 
-```bash
-git clone https://github.com/your-username/cosmetics-store.git
-cd cosmetics-store
+3. Install frontend dependencies:
+    ```bash
+    cd frontend
+    npm install
 
-#### 1. Clone the Repository
+4. Install backend dependencies:
+    ```bash
+    cd ../backend
+    npm install
 
-Clone this repository to your local machine using the following command:
+5. Configure environment variables:
+Create a .env file in the backend directory with your MySQL, MongoDB, and notification service credentials.
 
-```bash
-git clone https://github.com/your-username/cosmetics-store.git
-cd cosmetics-store
+### Usage
 
-#### 1. Clone the Repository
+1. Start the backend server:
+   ```bash
+   cd backend
+   node server.js
 
-Clone this repository to your local machine using the following command:
+2. Start the frontend development server:
+   ```bash
+   cd frontend
+   npm start
 
-```bash
-git clone https://github.com/your-username/cosmetics-store.git
-cd cosmetics-store
-
-#### 1. Clone the Repository
-
-Clone this repository to your local machine using the following command:
-
-```bash
-git clone https://github.com/your-username/cosmetics-store.git
-cd cosmetics-store
-
-#### 1. Clone the Repository
-
-Clone this repository to your local machine using the following command:
-
-```bash
-git clone https://github.com/your-username/cosmetics-store.git
-cd cosmetics-store
-
-#### 1. Clone the Repository
-
-Clone this repository to your local machine using the following command:
-
+3. Access the application in your browser at http://localhost:3000.
