@@ -54,6 +54,7 @@ Create a .env file in the backend directory with your MySQL credentials.
 3. The address to access the application will be displayed in your terminal once you run the application. Look for a line like:
 Local: http://localhost:5173/ (the port may vary).
 
+
 ![image](https://github.com/ayalagellis/Full-stack-project-7/blob/main/assets/pic1.png?raw=true)
 
 ![image](https://github.com/ayalagellis/Full-stack-project-7/blob/main/assets/pic2.png?raw=true)
